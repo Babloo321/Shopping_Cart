@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import "./Navbar.css";
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,6 +24,7 @@ function Navbar2({cart=[]}) {
     const [cartCount, setCartCount] = useState(0);
 
     useEffect(() => {
+      // console.log(cart);
       let count = 0;
       cart.forEach((item) => {
         count += item.qty;
@@ -51,4 +52,9 @@ function Navbar2({cart=[]}) {
     )
 }
 
-export default Navbar2;
+const mapStateToProps = (state)=> {
+  return {
+    cart : state.cart
+  }
+}
+export default connect(mapStateToProps) (Navbar2);
