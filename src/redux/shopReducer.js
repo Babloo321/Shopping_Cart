@@ -45,6 +45,7 @@ const initialState = {
 
 const shopReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case actionTypes.Add_To_Cart:
       const item = state.porducts.find(
         (product) => product.id === action.payload.id
@@ -64,12 +65,23 @@ const shopReducer = (state = initialState, action) => {
             )
           : [...state.cart, { ...item, qty: 1 }],
       };
+
     case actionTypes.Load_Current_Item:
       return {
         ...state,
         currentItem: action.payload.item,
       };
 
+    case actionTypes.Delete_From_Cart:
+      return {
+        ...state,
+        cart: state.cart.filter((productObj) => productObj.id != action.payload.id)
+      }
+      case actionTypes.Adjust_Cart:
+        return{
+          ...state,
+          cart: state.cart.map((productObj) => productObj.id == action.payload.id ? {...productObj, qty:action.payload.qty}: productObj)
+        }
     default:
       return state;
   }
